@@ -1,0 +1,21 @@
+{%  extends 'default/mybase.html.twig' %}
+
+{% block body %}
+    {{ form_start(myForm,{'attr':{'novalidate':'validate'}}) }}
+    <div style="color:#f00">{{ form_errors(myForm.id) }}</div>
+    <table border="1">
+        <tr>
+            <th>{{ form_label(myForm.name) }}</th>
+            <td>{{ form_widget(myForm.name) }}</td>
+            <td><span style="color:#ff0000">{{ form_errors(myForm.name) }}</span></td>
+        </tr>
+        <tr>
+            <th>{{ form_label(myForm.description) }}</th>
+            <td>{{ form_widget(myForm.description) }}</td>
+        </tr>
+    </table>
+        {{ form_row(myForm.name) }}
+    <hr>
+    {{ form_end(myForm) }}
+{% endblock %}
+
