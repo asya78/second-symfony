@@ -41,7 +41,9 @@ class DefaultController extends Controller
         $form -> handleRequest($request);
 
         if($form->isSubmitted()) {
+
             dump($form->getData());
+
         }
 
         return $this->render('default/test.html.twig', ['myForm'=>$form->createView()]);
@@ -53,17 +55,82 @@ class DefaultController extends Controller
     public function orm(){
 
         $product = new Product();
-        $product->setName('Coca Cola');
+
+        $product->setName('Coca Cola'.rand(1,1000));
+
         $product->setPrice('2.30');
+
         $product->setDescription('Cool drink!');
+
         $product->setCreateDate(new \DateTime());
 
         $em = $this->getDoctrine()->getManager();
+
         $em->persist($product);
 
         $em->flush();
 
         return $this->render('default/orm.html.twig',['product'=>$product]);
+    }
+
+    /**
+     * @Route("/orm_get")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function orm_get(){
+
+        $product = $this->getDoctrine()
+            ->getRepository(Product::class)
+            ->findByNameAndPrice();
+
+        return $this->render('default/orm.html.twig',['product'=>$product]);
+
+
+    }
+
+    /**
+     * @Route("/orm_update")
+     */
+    public function orm_update(){
+
+        $product = $this->getDoctrine()
+            ->getRepository(Product::class)
+            ->find(4);
+
+        $product->setName('New new 99');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->flush();
+
+        return $this->render('default/orm.html.twig',['product'=>$product]);
+
+    }
+
+    /**
+     * @Route("/orm_delete")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function orm_delete(){
+
+        $product = $this->getDoctrine()
+            ->getRepository(Product::class)
+            ->find(6);
+
+        if (!$product) {
+
+            throw $this->createNotFoundException('Product not found.');
+
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($product);
+
+        $em->flush();
+
+        return $this->render('default/orm.html.twig',['product'=>$product]);
+
     }
 
 
