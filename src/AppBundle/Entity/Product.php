@@ -26,13 +26,13 @@ class Product
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",unique=true)
      */
     private $name;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $email;
 
@@ -134,7 +134,21 @@ class Product
         $this->createDate = $createDate;
     }
 
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
 
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
 
 
 }

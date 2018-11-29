@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -45,6 +46,27 @@ class DefaultController extends Controller
 
         return $this->render('default/test.html.twig', ['myForm'=>$form->createView()]);
     }
+
+    /**
+     * @Route("/orm")
+     */
+    public function orm(){
+
+        $product = new Product();
+        $product->setName('Coca Cola');
+        $product->setPrice('2.30');
+        $product->setDescription('Cool drink!');
+        $product->setCreateDate(new \DateTime());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($product);
+
+        $em->flush();
+
+        return $this->render('default/orm.html.twig',['product'=>$product]);
+    }
+
+
 
 
 }

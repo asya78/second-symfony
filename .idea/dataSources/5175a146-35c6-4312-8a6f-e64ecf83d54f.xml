@@ -953,7 +953,6 @@
     <column id="236" parent="230" name="email">
       <Position>6</Position>
       <DataType>varchar(255)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <key id="237" parent="230" name="PRIMARY">
